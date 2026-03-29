@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        header {
+            background: #007bff;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        
+        .input-section {
+            display: flex;
+        }
+        
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+        }
+        
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .user {
+            text-align: right;
+            color: blue;
+            margin: 5px 0;
+        }
+        
+        .bot {
+            text-align: left;
+            color: #007bff;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>AI Assistant Chatbot</header>
+
+    <div class="container">
+        <div class="chat-box" id="chatBox"></div>
+
+        <div class="input-section">
+            <input type="text" id="userInput" placeholder="Ask something...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const chatBox = document.getElementById('chatBox');
+
+            if (input.value.trim() === '') return;
+
+            // User message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'user';
+            userMsg.innerText = input.value;
+            chatBox.appendChild(userMsg);
+
+            // Simple AI response (dummy logic)
+            const botMsg = document.createElement('div');
+            botMsg.className = 'bot';
+            botMsg.innerText = getBotResponse(input.value);
+            chatBox.appendChild(botMsg);
+
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function getBotResponse(message) {
+            message = message.toLowerCase();
+
+            if (message.includes('hello')) return 'Hi there! 😊';
+            if (message.includes('how are you')) return 'I am just code, but I am doing great!';
+            if (message.includes('name')) return 'I am your AI Assistant!';
+
+            return 'Sorry, I do not understand that yet.';
+        }
+    </script>
+
+</body>
+
+</html>

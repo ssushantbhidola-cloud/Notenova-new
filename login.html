@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CollegeConnect</title>
+    <link rel="stylesheet" href="login-style.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-brand">
+            <div class="brand-content">
+                <h1 style="text-align: center;">Note<span>Nova</span></h1>
+                <p>Your integrated campus portal for notes, AI assistance, and academic growth.</p>
+            </div>
+        </div>
+
+        <div class="login-form-section">
+            <form id="loginForm" class="login-form">
+                <h2>Welcome Back</h2>
+                <p class="subtitle">Please enter your details to sign in.</p>
+                <p class="error" id="error-message">Invaild Email or Password</p>
+
+
+                <div class="input-group">
+                    <label>Login As</label>
+                    <select id="role">
+                        <option value="student">Student</option>
+                        <option value="faculty">Faculty</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>College Email</label>
+                    <input type="email" id="email" placeholder="name@college.edu" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-options">
+                    <label><input type="checkbox"> Remember me</label>
+                    <a href="#">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-login">Sign In</button>
+
+                <p class="register-text">Don't have an account? <a href="#">Contact Admin</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let collegeEmail = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            const web_mail = "sushantbhidola@gmail.com"
+            const web_pass = "654321"
+            if (collegeEmail === web_mail && password === web_pass) {
+
+                window.location.href = 'project.html';
+            } else {
+                document.getElementById("error-message").style.display = "block"
+                document.getElementById("error-message").style.color = "red"
+
+            }
+        })
+    </script>
+
+</body>
+
+</html>

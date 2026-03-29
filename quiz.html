@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Monthly Programming Quiz</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef2f7;
+            text-align: center;
+        }
+        
+        .container {
+            width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 5px;
+        }
+        
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            background: #28a745;
+        }
+        
+        #nextBtn {
+            background: orange;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📅 Monthly Quiz</h1>
+
+        <!-- STUDENT FORM -->
+        <div id="studentForm">
+            <h3>Enter Student Details</h3>
+            <input type="text" id="name" placeholder="Enter Name">
+            <input type="text" id="roll" placeholder="Enter Roll Number">
+            <button onclick="saveStudent()">Continue</button>
+        </div>
+
+        <!-- SUBJECT SELECTION -->
+        <div id="subjects" style="display:none;">
+            <h3>Select Subject</h3>
+            <button onclick="startQuiz('html')">HTML</button>
+            <button onclick="startQuiz('css')">CSS</button>
+            <button onclick="startQuiz('python')">Python</button>
+            <button onclick="startQuiz('java')">Java</button>
+        </div>
+
+        <!-- QUIZ -->
+        <div id="quiz" style="display:none;">
+            <div id="question"></div>
+            <div id="answers"></div>
+            <button id="nextBtn">Next</button>
+        </div>
+
+        <!-- RESULT -->
+        <div id="result" style="display:none;"></div>
+
+    </div>
+
+    <script>
+        let studentName = "";
+        let rollNo = "";
+
+        function saveStudent() {
+            studentName = document.getElementById("name").value;
+            rollNo = document.getElementById("roll").value;
+
+            if (studentName === "" || rollNo === "") {
+                alert("Please enter Name and Roll Number");
+                return;
+            }
+
+            document.getElementById("studentForm").style.display = "none";
+            document.getElementById("subjects").style.display = "block";
+        }
+
+        // QUIZ DATA
+        const quizDB = {
+            html: [{
+                q: "What does HTML stand for?",
+                a: ["Hyper Text Markup Language", "High Tool Machine Language", "None", "Text Mark"],
+                c: 0
+            }, {
+                q: "HTML is used for?",
+                a: ["Structure", "Styling", "Logic", "DB"],
+                c: 0
+            }, {
+                q: "Paragraph tag?",
+                a: ["<p>", "<para>", "<text>", "<h1>"],
+                c: 0
+            }, {
+                q: "Image tag?",
+                a: ["<img>", "<image>", "<pic>", "<src>"],
+                c: 0
+            }, {
+                q: "Link tag?",
+                a: ["<a>", "<link>", "<href>", "<url>"],
+                c: 0
+            }, {
+                q: "Table tag?",
+                a: ["<table>", "<tab>", "<tbl>", "<tr>"],
+                c: 0
+            }, {
+                q: "Form tag?",
+                a: ["<form>", "<input>", "<button>", "<submit>"],
+                c: 0
+            }, {
+                q: "Heading largest?",
+                a: ["<h1>", "<h6>", "<h3>", "<head>"],
+                c: 0
+            }, {
+                q: "Break line?",
+                a: ["<br>", "<break>", "<lb>", "<b>"],
+                c: 0
+            }, {
+                q: "List tag?",
+                a: ["<ul>", "<li>", "<list>", "<ol>"],
+                c: 0
+            }],
+            css: [{
+                q: "CSS stands for?",
+                a: ["Cascading Style Sheets", "Creative", "Computer", "None"],
+                c: 0
+            }, {
+                q: "Used for?",
+                a: ["Styling", "Logic", "Structure", "DB"],
+                c: 0
+            }, {
+                q: "Color property?",
+                a: ["color", "bgcolor", "font-color", "text"],
+                c: 0
+            }, {
+                q: "Background?",
+                a: ["background-color", "bg", "color-bg", "back"],
+                c: 0
+            }, {
+                q: "Font size?",
+                a: ["font-size", "text-size", "size", "font"],
+                c: 0
+            }, {
+                q: "Margin?",
+                a: ["margin", "space", "padding", "gap"],
+                c: 0
+            }, {
+                q: "Padding?",
+                a: ["Inside space", "Outside", "Border", "None"],
+                c: 0
+            }, {
+                q: "Flex?",
+                a: ["flex", "block", "inline", "none"],
+                c: 0
+            }, {
+                q: "Position?",
+                a: ["position", "align", "float", "place"],
+                c: 0
+            }, {
+                q: "Border?",
+                a: ["border", "line", "stroke", "frame"],
+                c: 0
+            }],
+            python: [{
+                q: "Python is?",
+                a: ["Programming", "Markup", "Style", "DB"],
+                c: 0
+            }, {
+                q: "Function keyword?",
+                a: ["def", "func", "function", "define"],
+                c: 0
+            }, {
+                q: "List?",
+                a: ["[]", "{}", "()", "<>"],
+                c: 0
+            }, {
+                q: "Dictionary?",
+                a: ["{}", "[]", "()", "<>"],
+                c: 0
+            }, {
+                q: "Loop?",
+                a: ["for", "loop", "iterate", "repeat"],
+                c: 0
+            }, {
+                q: "Condition?",
+                a: ["if", "when", "check", "case"],
+                c: 0
+            }, {
+                q: "Print?",
+                a: ["print()", "echo()", "show()", "log()"],
+                c: 0
+            }, {
+                q: "Length?",
+                a: ["len()", "length()", "count()", "size()"],
+                c: 0
+            }, {
+                q: "String?",
+                a: ["\"text\"", "123", "True", "[]"],
+                c: 0
+            }, {
+                q: "Boolean?",
+                a: ["True", "Yes", "1", "On"],
+                c: 0
+            }],
+            java: [{
+                q: "Java is?",
+                a: ["Programming", "Markup", "Style", "None"],
+                c: 0
+            }, {
+                q: "Main method?",
+                a: ["main()", "start()", "run()", "init()"],
+                c: 0
+            }, {
+                q: "Class keyword?",
+                a: ["class", "define", "object", "struct"],
+                c: 0
+            }, {
+                q: "Object creation?",
+                a: ["new", "create", "make", "init"],
+                c: 0
+            }, {
+                q: "Print?",
+                a: ["System.out.println()", "print()", "echo()", "show()"],
+                c: 0
+            }, {
+                q: "Inheritance?",
+                a: ["extends", "inherit", "super", "base"],
+                c: 0
+            }, {
+                q: "Interface?",
+                a: ["interface", "implements", "class", "object"],
+                c: 0
+            }, {
+                q: "Loop?",
+                a: ["for", "loop", "iterate", "repeat"],
+                c: 0
+            }, {
+                q: "Boolean?",
+                a: ["true", "yes", "1", "on"],
+                c: 0
+            }, {
+                q: "String class?",
+                a: ["String", "Text", "Str", "Char"],
+                c: 0
+            }]
+        };
+
+        let currentQuiz = [];
+        let index = 0;
+        let score = 0;
+
+        function startQuiz(subject) {
+            document.getElementById("subjects").style.display = "none";
+            document.getElementById("quiz").style.display = "block";
+
+            currentQuiz = quizDB[subject];
+            index = 0;
+            score = 0;
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            let q = currentQuiz[index];
+            document.getElementById("question").innerText = q.q;
+            let answers = document.getElementById("answers");
+            answers.innerHTML = "";
+
+            q.a.forEach((ans, i) => {
+                let btn = document.createElement("button");
+                btn.innerText = ans;
+                btn.classList.add("btn");
+
+                btn.onclick = () => {
+                    if (i === q.c) score++;
+                    index++;
+                    nextStep();
+                };
+
+                answers.appendChild(btn);
+            });
+        }
+
+        function nextStep() {
+            if (index < currentQuiz.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById("quiz").style.display = "none";
+            let result = document.getElementById("result");
+            result.style.display = "block";
+
+            result.innerHTML = `
+    <h2>Quiz Result</h2>
+    <p><b>Name:</b> ${studentName}</p>
+    <p><b>Roll No:</b> ${rollNo}</p>
+    <h3>Score: ${score}/${currentQuiz.length}</h3>
+    <button onclick="location.reload()">Restart</button>
+  `;
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CollegeConnect Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2 class="logo">Note<span>Nova</span></h2>
+            <nav>
+                <ul>
+                    <li><a href="C:\Users\ssush\OneDrive\Desktop\Pbl project (2)\project.html">Dashboard</a></li>
+                    <li class="active"><a href="C:\Users\ssush\OneDrive\Desktop\Pbl project (2)\Notemarket.html">Notes Market</a></li>
+                    <li><a href="C:\Users\ssush\OneDrive\Desktop\Pbl project (2)\AI Assist.html">AI Assistant ChatBot</a></li>
+                    <li><a href="C:\Users\ssush\OneDrive\Desktop\Pbl project (2)\quiz.html">Monthly Quiz</a></li>
+                    <li><a href="C:\Users\ssush\OneDrive\Desktop\Pbl project (2)\doubtforum.html">Doubt Forum</a></li>
+                    <i class="fa-regular fa-brightness"></i>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1>Student Portal</h1>
+                <div style="display: flex; align-items: center; gap: 15px;">
+
+                    <body class="light-theme"></body>
+                    <button onclick="toggleTheme()">Theme</button>
+                    <div class="user-badge">User name</div>
+                </div>
+
+            </header>
+
+            <div class="dashboard-grid">
+                <div class="left-col">
+                    <div class="card">
+                        <h3>Top Rated Notes</h3>
+                        <div class="note-item">
+                            <div class="note-info">
+                                <strong>Data Structures.pdf</strong>
+                                <span class="rating">★★★★☆ (4.8)</span>
+                            </div>
+                            <div class="actions">
+                                <!-- Hidden file input -->
+                                <input type="file" id="fileInput" style="display: none;" />
+
+                                <button class="btn-primary" onclick="openFilePicker()"> Upload Note</button>
+
+                                <button class="btn-outline" onclick="downloadFile()">Download</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="note-item">
+                            <div class="note-info">
+                                <strong>JAVA.pdf</strong>
+                                <span class="rating">★★★★☆ (4.8)</span>
+                            </div>
+                            <div class="actions">
+                                <!-- Hidden file input -->
+                                <input type="file" id="fileInput" style="display: none;" />
+
+                                <button class="btn-primary" onclick="openFilePicker()"> Upload Note</button>
+
+                                <button class="btn-outline" onclick="downloadFile()">Download</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="forum-container">
+                        <h2>Community Doubt Forum</h2>
+
+                        <div class="post-form">
+                            <textarea id="questionInput" placeholder="Ask a question..."></textarea>
+                            <button id="postQuestionBtn">Post Question</button>
+                        </div>
+
+                        <div id="questionsList" class="questions-list">
+                            <!-- Questions will appear here dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-col">
+                    <div class="card ai-tutor">
+                        <h3>✨ AI Tutor</h3>
+                        <div id="chat-box" class="chat-box">
+                            <p class="msg-student">Student: Explain Faraday's Law.</p>
+                            <p class="msg-ai">AI: Induction occurs when...</p>
+                        </div>
+                        <input type="text" id="ai-input" placeholder="Ask doubt...">
+                    </div>
+
+                    <div class="card leaderboard">
+                        <h3>🏆 Quiz Leaderboard</h3>
+                        <ol>
+                            <li><span>Ajay</span> <strong>98%</strong></li>
+                            <li><span>Aviral</span> <strong>95%</strong></li>
+                            <li><span>Vivek</span> <strong>92%</strong></li>
+                            <li><span>Sushant</span> <strong>92%</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="logic.js"></script>
+
+    <script>
+        let uploadedFile = null;
+
+        // Open file picker
+        function openFilePicker() {
+            document.getElementById('fileInput').click();
+        }
+
+        // Handle file selection
+        document.getElementById('fileInput').addEventListener('change', function() {
+            if (this.files.length > 0) {
+                uploadedFile = this.files[0];
+                document.getElementById('status').textContent =
+                    "Uploaded: " + uploadedFile.name;
+            }
+        });
+
+        // Download file
+        function downloadFile() {
+            if (!uploadedFile) {
+                alert("Please upload a file first!");
+                return;
+            }
+
+            const url = URL.createObjectURL(uploadedFile);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = uploadedFile.name;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.querySelector("button");
+
+            body.classList.toggle("dark-theme");
+
+            if (body.classList.contains("dark-theme")) {
+                localStorage.setItem("theme", "dark");
+                btn.textContent = "Light Mode ☀️";
+            } else {
+                localStorage.setItem("theme", "light");
+                btn.textContent = "Dark Mode 🌙";
+            }
+        }
+    </script>
+    <script>
+        function showResult() {
+            document.getElementById("quiz").style.display = "none";
+            resultEl.style.display = "block";
+            let scorePercent = Math.round((score / quizData.length) * 100);
+            resultEl.innerHTML = `<h2>Your Score: ${scorePercent}%</h2>`;
+
+            // Ask for username
+            let userName = prompt("Enter your name for the leaderboard:");
+            if (userName) {
+                updateLeaderboard(userName, scorePercent);
+            }
+        }
+    </script>
+    <script>
+        const postBtn = document.getElementById('postQuestionBtn');
+        const questionInput = document.getElementById('questionInput');
+        const questionsList = document.getElementById('questionsList');
+
+        // Function to create a new question
+        function createQuestion(text) {
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('question');
+
+            questionDiv.innerHTML = `
+    <div class="question-text">${text}</div>
+    <div class="replies"></div>
+    <div class="reply-form">
+      <input type="text" placeholder="Write a reply...">
+      <button>Reply</button>
+    </div>
+  `;
+
+            // Add reply functionality
+            const replyBtn = questionDiv.querySelector('button');
+            const replyInput = questionDiv.querySelector('input');
+            const repliesDiv = questionDiv.querySelector('.replies');
+
+            replyBtn.addEventListener('click', () => {
+                const replyText = replyInput.value.trim();
+                if (replyText !== '') {
+                    const replyDiv = document.createElement('div');
+                    replyDiv.textContent = replyText;
+                    replyDiv.style.marginBottom = '5px';
+                    replyDiv.style.padding = '5px';
+                    replyDiv.style.background = '#f1f1f1';
+                    replyDiv.style.borderRadius = '5px';
+                    repliesDiv.appendChild(replyDiv);
+                    replyInput.value = '';
+                }
+            });
+
+            return questionDiv;
+        }
+
+        // Post question button click
+        postBtn.addEventListener('click', () => {
+            const questionText = questionInput.value.trim();
+            if (questionText !== '') {
+                const questionElement = createQuestion(questionText);
+                questionsList.prepend(questionElement); // Add new question on top
+                questionInput.value = '';
+            }
+        });
+    </script>
+</body>
+
+</html>
